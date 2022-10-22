@@ -37,8 +37,8 @@
             <a href="/recipe/<%= recipes[i]._id%>">
               <h2><%= recipes[i].name%></h2>
               <img class="img-fluid" src="<%= recipes[i].image%>">
-              <p> recipes[i].ingredients%></p>
-              <p> recipes[i].directions%></p>
+              <p><%= recipes[i].ingredients%></p>
+              <p><%= recipes[i].directions%></p>
             </a>
           </li>
         <% } %>
