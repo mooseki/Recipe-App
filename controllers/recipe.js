@@ -15,14 +15,14 @@ module.exports = {
       console.log(err);
     }
   },
-  getPost: async (req, res) => {
+  getRecipe: async (req, res) => {
     try {
       //id parameter comes from the post routes
       //router.get("/:id", ensureAuth, postsController.getPost);
       //http://localhost:2121/post/631a7f59a3e56acfc7da286f
       //id === 631a7f59a3e56acfc7da286f
-      const post = await Recipe.findById(req.params.id);
-      res.render("post.ejs", { post: post, user: req.user });
+      const recipe = await Recipe.findById(req.params.id);
+      res.render("recipe.ejs", { recipe: recipe, user: req.user });
     } catch (err) {
       console.log(err);
     }
@@ -48,7 +48,7 @@ module.exports = {
       console.log(err);
     }
   },
-  likePost: async (req, res) => {
+  likeRecipe: async (req, res) => {
     try {
       await Recipe.findOneAndUpdate(
         { _id: req.params.id },
@@ -57,12 +57,12 @@ module.exports = {
         }
       );
       console.log("Likes +1");
-      res.redirect(`/post/${req.params.id}`);
+      res.redirect(`/recipe/${req.params.id}`);
     } catch (err) {
       console.log(err);
     }
   },
-  deletePost: async (req, res) => {
+  deleteRecipe: async (req, res) => {
     try {
       // Find post by id
       let recipe = await Recipe.findById({ _id: req.params.id });
@@ -70,7 +70,7 @@ module.exports = {
       await cloudinary.uploader.destroy(recipe.cloudinaryId);
       // Delete post from db
       await Recipe.remove({ _id: req.params.id });
-      console.log("Deleted Post");
+      console.log("Deleted Recipe");
       res.redirect("/profile");
     } catch (err) {
       res.redirect("/profile");
