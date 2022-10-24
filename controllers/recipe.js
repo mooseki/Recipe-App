@@ -1,5 +1,6 @@
 const cloudinary = require("../middleware/cloudinary");
 const Recipe = require("../models/Recipe");
+const Favorite = require("../models/Favorite");
 
 module.exports = {
   getProfile: async (req, res) => {
@@ -27,23 +28,15 @@ module.exports = {
       console.log(err);
     }
   },
-  createRecipe: async (req, res) => {
+  favoriteRecipe: async (req, res) => {
     try {
-      // Upload image to cloudinary
-      const result = await cloudinary.uploader.upload(req.file.path);
-
       //media is stored on cloudainary - the above request responds with url to media and the media id that you will need when deleting content
-      await Recipe.create({
-        name: req.body.name,
-        image: result.secure_url,
-        cloudinaryId: result.public_id,
-        ingredients: req.body.ingredients,
-        directions: req.body.directions,
-        likes: 0,
+      await Favorite.create({
         user: req.user.id,
+        recipe: req.params.id,
       });
       console.log("Post has been added!");
-      res.redirect("/profile");
+      res.redirect(`/recipe/${req.params.id}`);
     } catch (err) {
       console.log(err);
     }

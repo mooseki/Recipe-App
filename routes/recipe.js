@@ -15,6 +15,7 @@ router.post(
   upload.single("file"),
   recipesController.createRecipe
 );
+router.post("/favoriteRecipe/:id", recipesController.favoriteRecipe);
 
 //Enables user to like post. In controller, uses POST model to update likes by 1
 router.put("/likeRecipe/:id", recipesController.likeRecipe);
